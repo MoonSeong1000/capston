@@ -30,8 +30,10 @@
  <img width="1000" height="370" src="/readme_image/flowchart.png"></img>
 </div>
 
-### 흐름도 & 개발 기술
+### 시스템 설계 / 주요 기능 개발 기술
 <br>
+##### 1. 길찾기 알고리즘
+1.1 T Map  
 <div>
  <img width="420" height="280" src="/readme_image/3.png"></img>
  <img width="420" height="280" src="/readme_image/4.png"></img>
