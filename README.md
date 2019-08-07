@@ -157,8 +157,10 @@ H값 : 경유지(CCTV)의 값에서 도착지 까지의 도보상 이동 거리<
 </div>
 
 <br>
+
 **HttpUrlConnection로 tmap server와 통신을 하여 tmap api에서 제공하는 출발지와 도착지를 파라미터로 하는 도보상 이동 거리를 요청. 
 response형식이 json이기 때문에 파싱과정을 통해 추정값 H 얻는다**
+
 <br>
 
 ```java
