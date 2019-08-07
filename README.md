@@ -29,8 +29,7 @@
 <div>
  <img width="1000" height="370" src="/readme_image/flowchart.png"></img>
 </div>
-<br>
-<br>
+
 ### 흐름도 & 개발 기술
 <br>
 <div>
