@@ -88,7 +88,9 @@
 <div>
  <img width="1000" height="370" src="/readme_image/5.png"></img>
 </div>
-출발지 기본 값 : 현재 위치 (검색 가능)
+<div>
+** 출발지 기본 값 : 현재 위치 (검색 가능)
+<div>
 ```java
     public void onLocationChange(Location location) {
         current_lat = location.getLatitude();
