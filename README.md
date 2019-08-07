@@ -136,7 +136,7 @@
         });
 ```
 
-**1.3 A* 알고리즘**
+**1.3 A star 알고리즘**
 <div>
  <img width="1000" height="370" src="/readme_image/6.png"></img>
 </div>
