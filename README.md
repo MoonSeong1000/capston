@@ -89,8 +89,9 @@
  <img width="1000" height="370" src="/readme_image/5.png"></img>
 </div>
 <div>
-** 출발지 기본 값 : 현재 위치 (검색 가능)
+ <p> 출발지 기본 값 : 현재 위치 (검색 가능) </p>
 <div>
+ 
 ```java
     public void onLocationChange(Location location) {
         current_lat = location.getLatitude();
@@ -100,7 +101,9 @@
         }
     }
 ```
+
 도착지 검색 후 도착지의 위도와 경도의 값을 저장 후 마커 표시
+
 ```java
         //검색 fragment
         Places.initialize(getApplicationContext(), "google_your_apikey");
