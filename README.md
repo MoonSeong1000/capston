@@ -27,4 +27,6 @@
 ## 시스템 구조
 ### Flow Chart 
 
-aa
+<div>
+ <img width="700" src="/readme_image/flowchart.png"></img>
+</div>
