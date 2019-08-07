@@ -32,6 +32,6 @@
 <br>
 ### 흐름도 & 개발 기술
 <div>
- <img width="450" height="350" src="/readme_image/3.png"></img>
- <img width="450" height="350" src="/readme_image/4.png"></img>
+ <img width="420" height="280" src="/readme_image/3.png"></img>
+ <img width="420" height="280" src="/readme_image/4.png"></img>
 </div>
