@@ -150,3 +150,117 @@ H값 : 경유지(CCTV)의 값에서 도착지 까지의 도보상 이동 거리<
 1) 출발지에서 가까운 cctv중 3개를 선택하여 G값과 추정값(H)를 더하여 가장 최솟값이 되는 cctv를 경유지로 선택<br>
 2) 선택된 cctv를 다시 출발점으로 선택하여 1과 같은 방식으로 경유지 선택<br>
 3) 도착지까지 선택된 경유지들을 passList에 저장 후 경로를 이음 <br>
+
+**1.4 Heuristic(추정값) 구하기**
+<div>
+ <img width="1000" height="370" src="/readme_image/7.png"></img>
+</div>
+
+**HttpUrlConnection로 tmap server와 통신을 하여 tmap api에서 제공하는 출발지와 도착지를 파라미터로 하는 도보상 이동 거리를 구함.**
+
+```java
+    public class HttpRequest extends Thread {
+        private String url;
+        private ContentValues values;
+        private DB.CCTV cctv;
+
+        public HttpRequest(String url, ContentValues values, DB.CCTV cctv) {
+            this.url = url;
+            this.values = values;
+            this.cctv = cctv;
+        }
+
+        public void run() {
+            RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
+            String result = requestHttpURLConnection.request(url, values); 
+            try {
+                JsonParser jsonParser = new JsonParser();
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray jsonArray = jsonObject.getJSONArray("features");
+                JSONObject featuresObj = (JSONObject) jsonArray.get(0);
+                JSONObject propertiesObj = featuresObj.getJSONObject("properties");
+                String distance = propertiesObj.getString("totalDistance");
+                cctv.setMap_distance(Double.parseDouble(distance));
+
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+```
+
+```java
+public class RequestHttpURLConnection {
+
+    public String request(String _url, ContentValues _params) {
+        HttpURLConnection urlConn = null;
+        StringBuffer sbParams = new StringBuffer();
+        Log.d("_url : ",_url);
+
+        //1.스트링 버퍼에 파라미터 연결
+        if (_params == null)
+            sbParams.append("");
+        else {
+            boolean isAnd = false;
+            String key;
+            String value;
+            for (Map.Entry<String, Object> parameter : _params.valueSet()) {
+                key = parameter.getKey();
+                value = parameter.getValue().toString();
+                if (isAnd)
+                    sbParams.append("&");
+                sbParams.append(key).append("=").append(value);
+                if (!isAnd)
+                    if (_params.size() >= 2)
+                        isAnd = true;
+            }
+        }
+
+        //HttpUrlConnection을 통해 web 데이터 가져오기.
+        try{
+            URL url = new URL(_url);
+            urlConn = (HttpURLConnection) url.openConnection();
+            // [2-1]. urlConn 설정.
+            urlConn.setRequestMethod("POST"); // URL 요청에 대한 메소드 설정 : GET/POST.
+            urlConn.setRequestProperty("Accept-Charset", "utf-8"); // Accept-Charset 설정.
+            urlConn.setRequestProperty("Context_Type", "application/x-www-form-urlencoded");
+
+            // [2-2]. parameter 전달 및 데이터 읽어오기.
+            String strParams = sbParams.toString(); //sbParams에 정리한 파라미터들을 스트링으로 저장. 예)id=id1&pw=123;
+            OutputStream os = urlConn.getOutputStream();
+            os.write(strParams.getBytes("UTF-8")); // 출력 스트림에 출력.
+            os.flush(); // 출력 스트림을 플러시(비운다)하고 버퍼링 된 모든 출력 바이트를 강제 실행.
+            os.close(); // 출력 스트림을 닫고 모든 시스템 자원을 해제.
+
+            // [2-3]. 연결 요청 확인.
+            // 실패 시 null을 리턴하고 메서드를 종료.
+            if (urlConn.getResponseCode() != HttpURLConnection.HTTP_OK)
+                return null;
+
+            // [2-4]. 읽어온 결과물 리턴.
+            // 요청한 URL의 출력물을 BufferedReader로 받는다.
+            BufferedReader reader = new BufferedReader(new InputStreamReader(urlConn.getInputStream(), "UTF-8"));
+
+            // 출력물의 라인과 그 합에 대한 변수.
+            String line;
+            String page = "";
+
+            // 라인을 받아와 합친다.
+            while ((line = reader.readLine()) != null){
+                page += line;
+            }
+            return page;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(urlConn!=null)
+                urlConn.disconnect();
+        }
+        return null;
+    }
+}
+```
