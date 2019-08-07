@@ -84,12 +84,14 @@
             }
         })
 ```
-**1.1.2 출발지와 도착지 선택
+**1.1.2 출발지와 도착지 선택**
 <div>
  <img width="1000" height="370" src="/readme_image/5.png"></img>
 </div>
 
-**출발지 기본 값 : 현재 위치 (검색 가능)
+
+**출발지 기본 값 : 현재 위치 (검색 가능)**
+
 
 ```java
     public void onLocationChange(Location location) {
@@ -101,7 +103,9 @@
     }
 ```
 
-**도착지 검색 후 도착지의 위도와 경도의 값을 저장 후 마커 표시
+
+**도착지 검색 후 도착지의 위도와 경도의 값을 저장 후 마커 표시**
+
 
 ```java
         //검색 fragment
