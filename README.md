@@ -1,5 +1,2 @@
-# capston
+# 공공데이터와 A* 알고리즘을 이용한 CCTV 안전 길 찾기 어플리케이션
 
-<div>
- <img width="300" src="/readme_image/aa.png"></img>
-</div>
