@@ -33,7 +33,7 @@
 ### 1. 안전 길찾기
 - 보행자 경로안내와 다중경유지를 제공하는 TMap API를 사용하였다. 도착지까지 CCTV가 있는 안전한 길로 경로를 제공해야 하기 때문에 길찾기 알고리즘에 제일 효율적인 A* 알고리즘을 활용하여 CCTV를 경유하는 안전한 길을 선택하도록 하였다. 
 
-1.1.1 맵 띄우기
+**1.1.1 맵 띄우기**
 ```java
     private static String mApiKey = "<<tmap_yourkey>>"; //api key
     
@@ -84,14 +84,13 @@
             }
         })
 ```
-1.1.2 출발지와 도착지 선택
+**1.1.2 출발지와 도착지 선택
 <div>
  <img width="1000" height="370" src="/readme_image/5.png"></img>
 </div>
-<div>
- <p> 출발지 기본 값 : 현재 위치 (검색 가능) </p>
-<div>
- 
+
+**출발지 기본 값 : 현재 위치 (검색 가능)
+
 ```java
     public void onLocationChange(Location location) {
         current_lat = location.getLatitude();
@@ -102,7 +101,7 @@
     }
 ```
 
-도착지 검색 후 도착지의 위도와 경도의 값을 저장 후 마커 표시
+**도착지 검색 후 도착지의 위도와 경도의 값을 저장 후 마커 표시
 
 ```java
         //검색 fragment
