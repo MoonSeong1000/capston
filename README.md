@@ -269,3 +269,66 @@ public class RequestHttpURLConnection {
     }
 }
 ```
+
+**1.5 G값 구하기**
+<div>
+ <img width="1000" height="370" src="/readme_image/8.png"></img>
+</div>
+
+<br>
+
+**도착지 까지의 직선거리. 사용자가 눈에 보이는 것은 2차원의 지도형식이지만 실제로 지구는 둥글기 때문에 평면상의 직선거리로 하면 실제 거리와 차이가 많이 나기 때문에 위도와 경도를 이용한 공식을 사용하여 값을 구해야 한다.**
+
+<br>
+
+```java
+    private double distance(double start_lat, double start_lon, double end_lat, double end_lon) {
+        //직선거리계산
+        return DEGLEN * Math.sqrt(Math.pow(end_lat - start_lat, 2) + Math.pow((end_lon - start_lon) * Math.cos(Math.toRadians(start_lat)), 2));
+    }
+```
+
+<br>
+
+**1.6 G+H=F값이 작은 순으로 정렬**
+
+```java
+Collections.sort(sortList, new Comparator<DB.CCTV>() {
+    @Override
+    public int compare(DB.CCTV c1, DB.CCTV c2) {
+       if (c2.getMap_distance() + c2.getD_heuristic() > c1.getMap_distance() + c1.getD_heuristic())
+            return -1;
+        else if (c2.getMap_distance() + c2.getD_heuristic() < c1.getMap_distance() + c1.getD_heuristic())
+            return 1;
+       return 0;
+       }
+});
+```
+
+**1.7 선택된 cctv가 있는 배열인 passList에 있는 값을 이용해 경로 도출**
+<div>
+ <img width="1000" height="370" src="/readme_image/9.png"></img>
+</div>
+
+```java
+        tmapdata.findPathDataWithType(TMapData.TMapPathType.PEDESTRIAN_PATH, new TMapPoint(start_lat,start_lon), new TMapPoint(end_lat, end_lon), passList, 0, new TMapData.FindPathDataListenerCallback() {
+            @Override
+            public void onFindPathData(TMapPolyLine tMapPolyLine) {
+                ArrayList<DB.CCTV> cctvs2 = new ArrayList<>();
+                tMapPolyLine.setLineColor(Color.RED);
+                tMapPolyLine.setLineWidth(10);
+                tmapview.addTMapPath(tMapPolyLine);
+                final double distance = tMapPolyLine.getDistance();
+                final double time = distance;
+                final double times = time / 60;
+                distances = distance / 1000;
+                getDistance = String.format("%,.2f", distances);
+                
+                //경로상의 cctv 마커 표시
+                for (int i = 0; i < finalCctvs.size(); i++) {
+                    cctv[0] = finalCctvs.get(i);
+                    cctvMarker2(tmapview, cctv[0].getAddr(), cctv[0].getManageOffice(), cctv[0].getTellNum(), cctv[0].getLatitude(), cctv[0].getLongitude());
+                }
+            }
+        });
+```
