@@ -28,5 +28,5 @@
 ### Flow Chart 
 
 <div>
- <img width="700" src="/readme_image/flowchart.png"></img>
+ <img width="1000" src="/readme_image/flowchart.png"></img>
 </div>
