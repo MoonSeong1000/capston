@@ -11,8 +11,10 @@
  <img width="400" src="/readme_image/1.png"></img>
  <img width="400" src="/readme_image/2.png"></img>
 </div>
-  
-## 1-2. 사회적 약자의 안전한 귀가를 위해서?
+
+<br>
+
+## 1-2 사회적 약자의 안전한 귀가를 위해서?
 사회적 약자의 안전한 귀가를 위해서 크게 4가지 기능을 제공한다.<br>
 1) 안전 길찾기 <br>
   - 현재 위치를 GPS로 인식하고, CCTV의 위도,경도 값을 받아와서 목적지까지 CCTV가 있는 안전한 길로 안내<br>
@@ -23,13 +25,16 @@
 4) 버튼 이벤트<br>
   - 알람 기능, 후레시 기능은 어플 내에서 간단한 조작으로 사용할 수 있고, 볼륨버튼을 3번 누르면 자동으로 메세지 전송<br>
 
+<br>
 
 ## Flow Chart
 <div>
  <img width="1000" height="370" src="/readme_image/flowchart.png"></img>
 </div>
 
-## 시스템 설계 / 주요 기능 개발 기술
+<br>
+
+## 2 시스템 설계 / 주요 기능 개발 기술
 ### 1. 안전 길찾기
 - 보행자 경로안내와 다중경유지를 제공하는 TMap API를 사용하였다. 도착지까지 CCTV가 있는 안전한 길로 경로를 제공해야 하기 때문에 길찾기 알고리즘에 제일 효율적인 A* 알고리즘을 활용하여 CCTV를 경유하는 안전한 길을 선택하도록 하였다. 
 
@@ -92,6 +97,7 @@
  <img width="1000" height="370" src="/readme_image/5.png"></img>
 </div>
 
+<br>
 
 **출발지 기본 값 : 현재 위치 (검색 가능)**
 
@@ -104,6 +110,8 @@
         }
     }
 ```
+
+<br>
 
 **도착지 검색 후 도착지의 위도와 경도의 값을 저장 후 마커 표시**
 
@@ -366,6 +374,9 @@ Collections.sort(sortList, new Comparator<DB.CCTV>() {
 <br>
 
 **2.2 데이터베이스 설계**
+
+<br>
+
 **CCTV DTO**
 ```java
  public static class CCTV {
