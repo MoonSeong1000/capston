@@ -84,6 +84,9 @@
             }
         })
 ```
+
+<br>
+
 **1.2 출발지와 도착지 선택**
 <div>
  <img width="1000" height="370" src="/readme_image/5.png"></img>
@@ -136,6 +139,8 @@
         });
 ```
 
+<br>
+
 **1.3 A star 알고리즘**
 <div>
  <img width="1000" height="370" src="/readme_image/6.png"></img>
@@ -150,6 +155,8 @@ H값 : 경유지(CCTV)의 값에서 도착지 까지의 도보상 이동 거리<
 1) 출발지에서 가까운 cctv중 3개를 선택하여 G값과 추정값(H)를 더하여 가장 최솟값이 되는 cctv를 경유지로 선택<br>
 2) 선택된 cctv를 다시 출발점으로 선택하여 1과 같은 방식으로 경유지 선택<br>
 3) 도착지까지 선택된 경유지들을 passList에 저장 후 경로를 이음 <br>
+
+<br>
 
 **1.4 Heuristic(추정값) 구하기**
 <div>
@@ -270,6 +277,8 @@ public class RequestHttpURLConnection {
 }
 ```
 
+<br>
+
 **1.5 G값 구하기**
 <div>
  <img width="1000" height="370" src="/readme_image/8.png"></img>
@@ -304,6 +313,8 @@ Collections.sort(sortList, new Comparator<DB.CCTV>() {
        }
 });
 ```
+
+<br>
 
 **1.7 선택된 cctv가 있는 배열인 passList에 있는 값을 이용해 경로 도출**
 <div>
