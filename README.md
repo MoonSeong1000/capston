@@ -8,7 +8,7 @@
 '안전'을 위한 프로그램을 개발하기로 하였다.  
 
 <div>
- <img width="300" src="/readme_image/1.png"></img>
- <img width="300" src="/readme_image/2.png"></img>
+ <img width="500" src="/readme_image/1.png"></img>
+ <img width="500" src="/readme_image/2.png"></img>
 </div>
   
