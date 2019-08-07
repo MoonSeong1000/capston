@@ -343,3 +343,246 @@ Collections.sort(sortList, new Comparator<DB.CCTV>() {
             }
         });
 ```
+
+<br>
+
+### 2. 데이터 베이스
+- 경찰서와 cctv의 데이터 베이스를 공공데이터포털에서 제공해주는 값으로 넣어두고, 사용자는 보호자의 연락처를 등록해놓을 때 Android Studio에서 제공하는 SQLiteDB에 저장하여서 사용한다.
+
+<br>
+
+**2.1 데이터베이스 불러오기**
+- 어플 최초 실행한다면 또는 데이터베이스가 업데이트가 되었다면 데이터베이스를 불러와서 저장하는 역할을 실행하고, 아닐 경우 그대로 사용.
+```java
+@Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        DB.setDB().isCheckDB(SplashActivity.this,"/data/data/" + getPackageName() + "/databases","finalcctv.db");
+        DBPOLICE.setDB().isCheckDB(SplashActivity.this,"/data/data/" + getPackageName() + "/databases","POLICE.db");
+
+        checkPermissions();
+}
+```
+<br>
+
+**2.2 데이터베이스 설계**
+**CCTV DTO**
+```java
+ public static class CCTV {
+        String addr;
+        String manageOffice;
+        String tellNum;
+        double latitude;
+        double longitude;
+        double d_heuristic;
+        double map_distance;
+        boolean state=false;
+
+        public CCTV(){}
+        public CCTV(String addr,
+             String manageOffice,
+             String tellNum,
+             double latitude,
+             double longitude) {
+            this.addr = addr;
+            this.manageOffice = manageOffice;
+            this.tellNum = tellNum;
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+
+        public String getAddr() {
+            return addr;
+        }
+
+        public String getManageOffice() {
+            return manageOffice;
+        }
+
+        public String getTellNum() {
+            return tellNum;
+        }
+
+        public double getLatitude() {
+            return latitude;
+        }
+
+        public double getLongitude() {
+            return longitude;
+        }
+
+        public void setD_heuristic(double distance) {d_heuristic = distance;}
+
+        public double getD_heuristic() {return d_heuristic;}
+
+        public void setMap_distance(double m_distance) {map_distance = m_distance;}
+
+        public double getMap_distance() {return map_distance;}
+    }
+```
+**POLICE DTO**
+```java
+public static class POLICE {
+        String name;
+        String manageOffice;
+        String kind;
+        String tellNum;
+        String addr;
+        Double latitude;
+        Double longitude;
+        public POLICE(){}
+        public POLICE(String manageOffice, String tellNum, String addr, double latitude, double longitude) {
+            this.name = name;
+            this.addr = addr;
+            this.kind = kind;
+            this.manageOffice = manageOffice;
+            this.tellNum = tellNum;
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+        public String getName() { return name; }
+        public String getManageOffice() { return manageOffice; }
+        public String getKind() { return kind; }
+        public String getTellNum() { return tellNum; }
+        public String getAddr() { return addr; }
+        public Double getLatitude() { return latitude; }
+        public Double getLongitude() { return longitude; }
+    }
+```
+
+<br>
+
+**2.3 보호자 등록**
+<div>
+ <img width="1000" height="370" src="/readme_image/4.png"></img>
+</div>
+
+```java
+public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        final String SQL_CREATE_WAITLIST_TABLE = "CREATE TABLE " + DictionaryContract.DictionaryEntry.TABLE_NAME + " (" +
+                DictionaryContract.DictionaryEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                DictionaryContract.DictionaryEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                DictionaryContract.DictionaryEntry.COLUMN_phoneNum + " TEXT NOT NULL, " +
+                DictionaryContract.DictionaryEntry.COLUMN_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
+                "); ";
+
+        // 쿼리 실행
+        sqLiteDatabase.execSQL(SQL_CREATE_WAITLIST_TABLE);
+    }
+```
+
+<br>
+
+### 3. 긴급메시지 및 버튼 이벤트
+
+<br>
+
+**3.1 긴급메시지**
+- 문자 버튼 클릭시 데이터베이스에 보호자로 등록된 번호로 현재위치를 알려주고 지도에 정확한 위치가 표시됨.
+
+<br>
+
+<div>
+ <img width="1000" height="370" src="/readme_image/10.png"></img>
+</div>
+
+```java
+action_message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "문자", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                String nowAddress = "현재 위치 확인 불가";
+                List<Address> address = null;
+                try {
+
+                    if (geocoder != null) {
+                        address = geocoder.getFromLocation(current_lat, current_lon, 1); //주소변환
+                        if (address != null && address.size() > 0) { // 주소 글짜르기
+                            String currentLocationAddress = address.get(0).getAddressLine(0).toString();
+                            nowAddress = currentLocationAddress;
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                String sms = "위급 상황입니다. 현재위치는 " + nowAddress + " 입니다.";// 현재 위도 경도를 주소로 변환
+                String url = "http://map.naver.com/?dlevel=8&lat="+current_lat+"&lng="+current_lon;
+                String selectQuery = "SELECT * FROM " + DictionaryContract.DictionaryEntry.TABLE_NAME;
+                Cursor cursor2 = mDb.rawQuery(selectQuery, null);
+                while (cursor2.moveToNext()) {
+                    try {
+                        SmsManager smsManager = SmsManager.getDefault();
+                        smsManager.sendTextMessage(cursor2.getString(2), null, sms, null, null);
+                        smsManager.sendTextMessage(cursor2.getString(2), null, url, null, null);
+                        Toast.makeText(getApplicationContext(), "전송 완료!", Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), "SMS faild, please try again later!", Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+```
+
+<br>
+
+**OUTPUT**
+<div>
+ <img width="1000" height="370" src="/readme_image/11.png"></img>
+</div>
+
+<br>
+
+**3.2 버튼이벤트**
+- 볼륨버튼에 대한 조작 권한을 얻어서 위급한 상황시 볼륨down버튼을 3번 누르면 보호자에게 문자 전송
+```java
+public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch(keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                smsCount = smsCount+1;
+                if(smsCount==3)
+                {
+                    smsCount=0;
+                    String nowAddress = "현재 위치 확인 불가";
+                    List<Address> address = null;
+                    try {
+
+                        if (geocoder != null) {
+                            address = geocoder.getFromLocation(current_lat, current_lon, 1); //주소변환
+                            if (address != null && address.size() > 0) { // 주소 글짜르기
+                                String currentLocationAddress = address.get(0).getAddressLine(0).toString();
+                                nowAddress = currentLocationAddress;
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    String sms = "위급 상황입니다. 현재위치는 " + nowAddress + " 입니다.";// 현재 위도 경도를 주소로 변환
+                    String url = "http://map.naver.com/?dlevel=8&lat="+current_lat+"&lng="+current_lon;
+                    String selectQuery = "SELECT * FROM " + DictionaryContract.DictionaryEntry.TABLE_NAME;
+                    Cursor cursor2 = mDb.rawQuery(selectQuery, null);
+                    while (cursor2.moveToNext()) {
+                        Log.d("값은 : ", cursor2.getString(2));
+                        try {
+                            SmsManager smsManager = SmsManager.getDefault();
+                            smsManager.sendTextMessage(cursor2.getString(2), null, sms, null, null);
+                            smsManager.sendTextMessage(cursor2.getString(2), null, url, null, null);
+
+                            Toast.makeText(getApplicationContext(), "전송 완료!", Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), "SMS faild, please try again later!", Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                break;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+```
+
+
