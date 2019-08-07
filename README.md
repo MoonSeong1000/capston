@@ -26,7 +26,12 @@
 
 ## 시스템 구조
 ### Flow Chart 
-
 <div>
  <img width="1000" height="370" src="/readme_image/flowchart.png"></img>
+</div>
+<br>
+### 
+<div>
+ <img width="500" height="370" src="/readme_image/3.png"></img>
+ <img width="500" height="370" src="/readme_image/4.png"></img>
 </div>
