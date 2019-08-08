@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="8dp"
+    android:paddingTop="3dp"
+    android:paddingBottom="3dp"
+    android:layout_height="wrap_content">
+
+    <!--<ImageView-->
+        <!--android:id="@+id/recyclerview_search1"-->
+        <!--android:layout_width="30dp"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:src="@drawable/search1"/>-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/recyclerview_start"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:text="abc" />-->
+    <!--<ImageView-->
+        <!--android:id="@+id/recyclerview_direction"-->
+        <!--android:layout_width="27dp"-->
+        <!--android:layout_height="27dp"-->
+        <!--android:src="@drawable/direction"/>-->
+    <!--<TextView-->
+        <!--android:id="@+id/recyclerview_end"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:text="123" />-->
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/recyclerview_search1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="1dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/search1" />
+
+    <LinearLayout
+        android:id="@+id/aa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/recyclerview_search1">
+        <TextView
+            android:id="@+id/recyclerview_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hihi"
+            android:textSize="1dp"
+            android:textColor="#000000"/>
+        <TextView
+            android:id="@+id/recyclerview_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="1dp"
+            android:textColor="#000000"/>
+    </LinearLayout>
+    <!--<TextView-->
+        <!--android:id="@+id/recyclerview_start"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignTop="@+id/circleView"-->
+        <!--android:layout_marginLeft="60dp"-->
+        <!--android:layout_marginTop="1dp"-->
+        <!--android:layout_toEndOf="@+id/circleView"-->
+        <!--android:layout_toRightOf="@+id/circleView"-->
+        <!--android:text=""-->
+        <!--android:textSize="10sp" />-->
+
+    <!---->
+    <!--<TextView-->
+        <!--android:id="@+id/recyclerview_end"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text=""-->
+        <!--android:textSize="10sp"-->
+        <!--android:layout_marginTop="1dp"-->
+        <!--android:layout_below="@+id/recyclerview_start"-->
+        <!--android:layout_toRightOf="@+id/circleView"-->
+        <!--android:layout_alignLeft="@+id/recyclerview_start"-->
+        <!--android:layout_alignStart="@+id/recyclerview_start" />-->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/aa"
+        android:layout_marginTop="8dp"
+        android:background="@color/custom_blue1"
+        android:paddingTop="3dp" />
+
+</RelativeLayout>

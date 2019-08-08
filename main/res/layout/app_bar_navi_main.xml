@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".naviActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+    </android.support.design.widget.AppBarLayout>
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_navi_main" />
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/current_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="110dp"
+        android:src="@drawable/ic_my_location_black_24dp"
+        app:fab_colorNormal="@color/white"
+        />
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/police_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="180dp"
+        android:src="@drawable/policeicon"
+        app:fab_colorNormal="@color/white"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="left|top" />
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/multiple_actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        app:fab_addButtonColorNormal="@color/white"
+        app:fab_addButtonColorPressed="@color/white_pressed"
+        app:fab_addButtonPlusIconColor="@color/half_black"
+        app:fab_labelStyle="@style/menu_labels_style"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="right|bottom">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/white"
+            app:fab_colorPressed="@color/white_pressed"
+            android:src="@drawable/ic_mail_outline_black_24dp"
+            app:fab_title="문자" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_alram"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/white"
+            app:fab_colorPressed="@color/white_pressed"
+            android:src="@drawable/ic_alarm_add_black_24dp"
+            app:fab_title="알람" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/white"
+            app:fab_colorPressed="@color/white_pressed"
+            android:src="@drawable/ic_highlight_black_24dp"
+            app:fab_title="불빛" />
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="5dp"
+            android:background="@android:drawable/presence_away" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  도착지까지 걸리는 시간"
+            android:textSize="17sp"
+            android:textColor="@color/strong_Brown"/>
+
+        <TextView
+            android:id="@+id/distime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" 0 분 / 0.00km"
+            android:textColor="#000"
+            android:textSize="17sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
